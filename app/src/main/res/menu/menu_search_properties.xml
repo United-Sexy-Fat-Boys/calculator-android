@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Crit">
+        <menu android:checkableBehavior="single">
+            <item android:title="Import" />
+            <item android:title="Gallery" />
+            <item android:title="Slideshow" />
+        </menu>
+    </item>
+</menu>
