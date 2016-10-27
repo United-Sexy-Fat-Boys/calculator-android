@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.SearchView;
 
 import com.example.asus.calculator.R;
+import com.example.asus.calculator.model.persistent.Category;
 import com.example.asus.calculator.model.persistent.Product;
 import com.example.asus.calculator.tools.adapter.ProductAdapter;
 import com.example.asus.calculator.tools.adapter.SuggestionsProductAdapter;
@@ -40,6 +41,7 @@ public class SearchActivity extends ListActivity implements NavigationView.OnNav
     private SuggestionsProductAdapter suggestionsAdapter;
     private String mCurFilter;
     private SearchView searchView;
+    private Category category;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,23 +58,17 @@ public class SearchActivity extends ListActivity implements NavigationView.OnNav
         setListAdapter(adapter);
         getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
-
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) findViewById(R.id.search_view);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setSubmitButtonEnabled(true);
         searchView.setOnQueryTextListener(this);
-
-       /* searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                return false;
-            }
-        });*/
-
         suggestionsAdapter = new SuggestionsProductAdapter(this, null, true);
         searchView.setSuggestionsAdapter(suggestionsAdapter);
 
+        Intent intent = getIntent();
+        category = (Category) intent.getSerializableExtra("Category");
+        Log.i(LOG_TAG, "received category -> id: " + category.getId() + ", name: " + category.getName());
         getLoaderManager().initLoader(0, null, this);
     }
 
@@ -100,7 +96,7 @@ public class SearchActivity extends ListActivity implements NavigationView.OnNav
     public boolean onQueryTextSubmit(String query) {
         Log.d(LOG_TAG, "onQueryTextSubmit: " + query);
         ProductLoadTask task = new ProductLoadTask(0, listener);
-        task.execute(query, "3");
+        task.execute(query, Long.toString(category.getId()));
         return false;
     }
 
@@ -134,8 +130,7 @@ public class SearchActivity extends ListActivity implements NavigationView.OnNav
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         SuggestionProductLoader loader = new SuggestionProductLoader(this);
         loader.setProductName(mCurFilter);
-        // FIXME: 10/27/2016 handle intent from category fragment
-        loader.setCategory_id("3");
+        loader.setCategory_id(Long.toString(category.getId()));
         return loader;
     }
 
