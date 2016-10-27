@@ -1,6 +1,7 @@
 package com.example.asus.calculator.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,7 @@ import com.example.asus.calculator.tools.adapter.CategoryAdapter;
 import com.example.asus.calculator.tools.loader.CategoryLoadTask;
 import com.example.asus.calculator.tools.loader.LazyLoader;
 import com.example.asus.calculator.tools.loader.ResponseListener;
+import com.example.asus.calculator.ui.activity.SearchActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +74,10 @@ public class CategoryFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String mes = "pos: " + position + " content: " + list.get(position).getName();
                 Log.i(LOG_TAG, "Picked category - " + mes);
-                categoryListener.onCategoryClick(list.get(position));
+                Intent intent = new Intent(getContext(), SearchActivity.class);
+                intent.putExtra("Category", list.get(position));
+                startActivity(intent);
+                //categoryListener.onCategoryClick(list.get(position));
             }
         });
 
