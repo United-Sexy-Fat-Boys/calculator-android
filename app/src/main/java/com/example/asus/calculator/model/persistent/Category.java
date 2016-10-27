@@ -1,11 +1,12 @@
 package com.example.asus.calculator.model.persistent;
 
+import com.example.asus.calculator.dao.impl.CategoryDaoImpl;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.io.Serializable;
 
-@DatabaseTable(tableName = "category")
+@DatabaseTable(tableName = "category", daoClass = CategoryDaoImpl.class)
 public class Category extends Entity implements Serializable {
     private static final long serialVersionUID = 1561996713334647500L;
 
