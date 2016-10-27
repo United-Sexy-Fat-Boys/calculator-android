@@ -12,16 +12,13 @@ import com.example.asus.calculator.R;
 import com.example.asus.calculator.model.persistent.Product;
 
 public class SuggestionsProductAdapter extends CursorAdapter {
-    private Context context;
 
     public SuggestionsProductAdapter(Context context, Cursor c, boolean autoRequery) {
         super(context, c, autoRequery);
-        this.context = context;
     }
 
     public SuggestionsProductAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
-        this.context = context;
     }
 
     @Override
