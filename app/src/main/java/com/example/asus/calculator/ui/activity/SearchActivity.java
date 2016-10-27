@@ -69,10 +69,6 @@ public class SearchActivity extends ListActivity implements NavigationView.OnNav
         searchView.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
             @Override
             public boolean onSuggestionSelect(int position) {
-                Cursor cursor = suggestionsAdapter.getCursor();
-                cursor.moveToPosition(position);
-                String value = cursor.getString(cursor.getColumnIndex(Product.NAME));
-                Log.i(LOG_TAG, "Suggestion SELECTED -> pos: " + position + ", text: " + value);
                 return false;
             }
 
@@ -81,8 +77,8 @@ public class SearchActivity extends ListActivity implements NavigationView.OnNav
                 Cursor cursor = suggestionsAdapter.getCursor();
                 cursor.moveToPosition(position);
                 String value = cursor.getString(cursor.getColumnIndex(Product.NAME));
-                Log.i(LOG_TAG, "Suggestion CLICKED -> pos: " + position + ", text: " + value);
-                return false;
+                searchView.setQuery(value, true);
+                return true;
             }
         });
 
@@ -101,10 +97,9 @@ public class SearchActivity extends ListActivity implements NavigationView.OnNav
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            searchView.setQuery(query, false);
+            searchView.setQuery(query, true);
             Log.d(LOG_TAG, "query from search: " + query);
         }
-
     }
 
     @Override
@@ -117,7 +112,7 @@ public class SearchActivity extends ListActivity implements NavigationView.OnNav
         Log.d(LOG_TAG, "onQueryTextSubmit: " + query);
         ProductLoadTask task = new ProductLoadTask(0, listener);
         task.execute(query, Long.toString(category.getId()));
-        return false;
+        return true;
     }
 
     @Override
