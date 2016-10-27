@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.asus.calculator.R;
+import com.example.asus.calculator.dao.CategoryDao;
 import com.example.asus.calculator.dao.ProductDao;
 import com.example.asus.calculator.model.persistent.Category;
 import com.example.asus.calculator.model.persistent.Dish;
@@ -23,7 +24,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME = "calculator.db";
     private static final int INIT_VERSION = 25;
 
-    private Dao<Category, Long> categoryDao;
+    private CategoryDao categoryDao;
     private Dao<Dish, Long> dishDao;
     private ProductDao productDao;
     private Dao<Part, Long> partDao;
@@ -63,7 +64,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
     }
 
-    public Dao<Category, Long> getCategoryDao() throws SQLException {
+    public CategoryDao getCategoryDao() throws SQLException {
         if (categoryDao == null) {
             categoryDao = getDao(Category.class);
         }
