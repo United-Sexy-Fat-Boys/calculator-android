@@ -52,6 +52,7 @@ public class SuggestionProductLoader extends AbstractCursorLoader {
             Log.i(LOG_TAG, "name of the product is NULL");
             return null;
         }
+
         try {
             dao = DBHelperFactory.getHelper().getProductDao();
             QueryBuilder<Product, Long> queryBuilder = dao.queryBuilder();
@@ -68,14 +69,6 @@ public class SuggestionProductLoader extends AbstractCursorLoader {
             Log.e(LOG_TAG, "building statement", e);
         }
 
-        if (cursor != null) {
-            Log.i(LOG_TAG, "cursor count: " + cursor.getCount());
-            int count = cursor.getCount();
-            for (int i = 0; i < count; i++) {
-                cursor.moveToPosition(i);
-                Log.i(LOG_TAG, "cursor context: " + cursor.getString(cursor.getColumnIndex(Product.NAME)));
-            }
-        }
         return cursor;
     }
 }
