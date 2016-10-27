@@ -40,6 +40,7 @@ public class SearchActivity extends ListActivity implements NavigationView.OnNav
     private ProductAdapter adapter;
     private SuggestionsProductAdapter suggestionsAdapter;
     private String mCurFilter;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,10 +59,11 @@ public class SearchActivity extends ListActivity implements NavigationView.OnNav
 
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) findViewById(R.id.search_view);
+        searchView = (SearchView) findViewById(R.id.search_view);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setSubmitButtonEnabled(true);
         searchView.setOnQueryTextListener(this);
+
        /* searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
@@ -84,8 +86,10 @@ public class SearchActivity extends ListActivity implements NavigationView.OnNav
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
+            searchView.setQuery(query, false);
             Log.d(MagicConstants.LOG_TAG, "query from search: " + query);
         }
+
     }
 
     @Override
