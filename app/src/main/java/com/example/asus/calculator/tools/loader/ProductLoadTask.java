@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class ProductLoadTask extends AsyncTask<String, Void, List<Product>> {
-    private static final String LOG_TAG = "ProductLoadTask";
+    private static final String LOG_TAG = ProductLoadTask.class.getSimpleName();
     public static final long COUNT = 10;
 
     private long startIndex;

@@ -8,13 +8,13 @@ import android.widget.ProgressBar;
 import com.example.asus.calculator.dao.CategoryDao;
 import com.example.asus.calculator.model.persistent.Category;
 import com.example.asus.calculator.tools.db.DBHelperFactory;
-import com.example.asus.calculator.util.MagicConstants;
 
 import java.sql.SQLException;
 import java.util.List;
 
 
 public class CategoryLoadTask extends AsyncTask<Void, Void, List<Category>> {
+    private static final String LOG_TAG = CategoryLoadTask.class.getSimpleName();
     private static final long COUNT = 6;
 
     private long startIndex;
@@ -43,14 +43,14 @@ public class CategoryLoadTask extends AsyncTask<Void, Void, List<Category>> {
 
     @Override
     protected List<Category> doInBackground(Void... params) {
-        Log.i(MagicConstants.LOG_TAG, "Loading categories...");
+        Log.i(LOG_TAG, "Loading categories...");
 
         List<Category> list = null;
         try {
             CategoryDao dao = DBHelperFactory.getHelper().getCategoryDao();
             list = dao.getLimitedWithOffset(COUNT, startIndex);
         } catch (SQLException e) {
-            Log.e(MagicConstants.LOG_TAG, "Loading categories due to onScroll");
+            Log.e(LOG_TAG, "Loading categories due to onScroll");
         }
 
         return list;

@@ -12,10 +12,11 @@ import com.example.asus.calculator.ui.fragment.ProductFragment;
 import com.example.asus.calculator.ui.fragment.SecondMainFragment;
 
 import static com.example.asus.calculator.util.MagicConstants.ERR_MSG;
-import static com.example.asus.calculator.util.MagicConstants.LOG_TAG;
 
 public class FragmentFactory {
+    private static final String LOG_TAG = FragmentFactory.class.getSimpleName();
     private static FragmentFactory instance = new FragmentFactory();
+
     private SparseArray<Class<? extends Fragment>> array;
 
     public static FragmentFactory getInstance() {

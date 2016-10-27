@@ -11,7 +11,6 @@ import com.example.asus.calculator.model.persistent.Category;
 import com.example.asus.calculator.model.persistent.Dish;
 import com.example.asus.calculator.model.persistent.Part;
 import com.example.asus.calculator.model.persistent.Product;
-import com.example.asus.calculator.util.MagicConstants;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
@@ -21,8 +20,9 @@ import java.sql.SQLException;
 
 
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
+    private static final String LOG_TAG = DatabaseHelper.class.getSimpleName();
     private static final String DATABASE_NAME = "calculator.db";
-    private static final int INIT_VERSION = 25;
+    private static final int INIT_VERSION = 26;
 
     private CategoryDao categoryDao;
     private Dao<Dish, Long> dishDao;
@@ -40,7 +40,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, Dish.class);
             TableUtils.createTable(connectionSource, Product.class);
             TableUtils.createTable(connectionSource, Part.class);
-            Log.i(MagicConstants.LOG_TAG, "database created");
+            Log.i(LOG_TAG, "database created");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -49,10 +49,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
-        Log.i(MagicConstants.LOG_TAG, "enter in onUpgrade()");
+        Log.i(LOG_TAG, "enter in onUpgrade()");
         if (newVersion > oldVersion) {
             try {
-                Log.i(MagicConstants.LOG_TAG, "Databases upgraded");
+                Log.i(LOG_TAG, "Databases upgraded");
                 TableUtils.dropTable(connectionSource, Part.class, true);
                 TableUtils.dropTable(connectionSource, Dish.class, true);
                 TableUtils.dropTable(connectionSource, Product.class, true);

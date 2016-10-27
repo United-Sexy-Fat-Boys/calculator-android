@@ -22,10 +22,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
 
-import static com.example.asus.calculator.util.MagicConstants.LOG_TAG;
 
 //SUPER BAD CODE!!!!
 public class SecondMainFragment extends Fragment {
+    private static final String LOG_TAG = SecondMainFragment.class.getSimpleName();
     private Button btnCategories;
     private Button btnProducts;
 

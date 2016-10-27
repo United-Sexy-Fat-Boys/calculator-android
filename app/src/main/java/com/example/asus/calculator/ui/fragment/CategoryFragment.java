@@ -23,10 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.asus.calculator.util.MagicConstants.ERR_MSG;
-import static com.example.asus.calculator.util.MagicConstants.LOG_TAG;
 
 
 public class CategoryFragment extends Fragment {
+    private static final String LOG_TAG = CategoryFragment.class.getSimpleName();
     private GridView gridView;
     private CategoryAdapter adapter;
     private OnCategoryClickListener categoryListener;

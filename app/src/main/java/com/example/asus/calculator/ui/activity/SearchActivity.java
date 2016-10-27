@@ -25,7 +25,6 @@ import com.example.asus.calculator.tools.adapter.SuggestionsProductAdapter;
 import com.example.asus.calculator.tools.loader.ProductLoadTask;
 import com.example.asus.calculator.tools.loader.ResponseListener;
 import com.example.asus.calculator.tools.loader.SuggestionProductLoader;
-import com.example.asus.calculator.util.MagicConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +46,7 @@ public class SearchActivity extends ListActivity implements NavigationView.OnNav
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        Log.i(MagicConstants.LOG_TAG, "search Activity created");
+        Log.i(LOG_TAG, "search Activity created");
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer = (NavigationView) findViewById(R.id.navigation_view);
         drawer.setNavigationItemSelectedListener(this);
@@ -87,7 +86,7 @@ public class SearchActivity extends ListActivity implements NavigationView.OnNav
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             searchView.setQuery(query, false);
-            Log.d(MagicConstants.LOG_TAG, "query from search: " + query);
+            Log.d(LOG_TAG, "query from search: " + query);
         }
 
     }
@@ -99,7 +98,7 @@ public class SearchActivity extends ListActivity implements NavigationView.OnNav
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        Log.d(MagicConstants.LOG_TAG, "onQueryTextSubmit: " + query);
+        Log.d(LOG_TAG, "onQueryTextSubmit: " + query);
         ProductLoadTask task = new ProductLoadTask(0, listener);
         task.execute(query, "3");
         return false;
@@ -107,7 +106,7 @@ public class SearchActivity extends ListActivity implements NavigationView.OnNav
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        Log.d(MagicConstants.LOG_TAG, "onQueryTextChange: " + newText);
+        Log.d(LOG_TAG, "onQueryTextChange: " + newText);
         String newFilter = !TextUtils.isEmpty(newText) ? newText : null;
         if (mCurFilter == null && newFilter == null) {
             return true;

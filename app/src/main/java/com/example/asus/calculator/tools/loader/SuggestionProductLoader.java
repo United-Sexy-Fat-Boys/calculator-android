@@ -52,12 +52,11 @@ public class SuggestionProductLoader extends AbstractCursorLoader {
             Log.i(LOG_TAG, "name of the product is NULL");
             return null;
         }
-
         try {
             dao = DBHelperFactory.getHelper().getProductDao();
             QueryBuilder<Product, Long> queryBuilder = dao.queryBuilder();
             queryBuilder.limit(LIMIT).where().eq(Product.CATEGORY_ID, getCategory_id()).and()
-                    .like(Product.NAME, String.format("%%%s%%", getProductName()));
+                    .like(Product.NAME, String.format("%s%%", getProductName()));
             query = queryBuilder.prepare();
 
             DatabaseConnection connection = dao.getConnectionSource().getReadOnlyConnection(dao.getTableName());
