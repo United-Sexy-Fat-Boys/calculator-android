@@ -11,15 +11,15 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class CategoryDaoImpl extends BaseDaoImpl<Category, Long> implements CategoryDao {
-    protected CategoryDaoImpl(Class<Category> dataClass) throws SQLException {
+    public CategoryDaoImpl(Class<Category> dataClass) throws SQLException {
         super(dataClass);
     }
 
-    protected CategoryDaoImpl(ConnectionSource connectionSource, Class<Category> dataClass) throws SQLException {
+    public CategoryDaoImpl(ConnectionSource connectionSource, Class<Category> dataClass) throws SQLException {
         super(connectionSource, dataClass);
     }
 
-    protected CategoryDaoImpl(ConnectionSource connectionSource, DatabaseTableConfig<Category> tableConfig) throws SQLException {
+    public CategoryDaoImpl(ConnectionSource connectionSource, DatabaseTableConfig<Category> tableConfig) throws SQLException {
         super(connectionSource, tableConfig);
     }
 
