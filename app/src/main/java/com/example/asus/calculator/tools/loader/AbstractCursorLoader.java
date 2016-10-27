@@ -20,16 +20,13 @@ public abstract class AbstractCursorLoader extends AsyncTaskLoader<Cursor> {
             }
             return;
         }
-        // FIXME: 10/27/2016 remove oldCursor
-        Cursor oldCursor = cursor;
-        cursor = data;
 
         if (isStarted()) {
-            super.deliverResult(cursor);
+            super.deliverResult(data);
         }
 
-        if (oldCursor != null && oldCursor != data && !oldCursor.isClosed()) {
-            oldCursor.close();
+        if (cursor != null && !cursor.isClosed()) {
+            cursor.close();
         }
     }
 
