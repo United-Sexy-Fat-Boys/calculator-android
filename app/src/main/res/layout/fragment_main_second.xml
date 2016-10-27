@@ -5,10 +5,18 @@
     android:layout_height="match_parent">
 
     <Button
-        android:text="Button"
+        android:text="Load Categories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/button_load_categories"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/button" />
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="Load Products"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_load_products"
+        android:layout_above="@+id/button_load_categories"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

@@ -13,19 +13,20 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class ProductLoadTask extends AsyncTask<String, Void, List<Product>> {
+    private static final String LOG_TAG = "ProductLoadTask";
     public static final long COUNT = 10;
 
     private long startIndex;
     private ResponseListener<Product> listener;
 
+    /**
+     * constructor for {@link ProductLoadTask}
+     * @param startIndex - loading items, starting from specified index
+     * @param listener - class, that handles returning {@link List} from AsyncTask
+     */
     public ProductLoadTask(long startIndex, ResponseListener<Product> listener) {
         this.startIndex = startIndex;
         this.listener = listener;
-    }
-
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
     }
 
     /**
@@ -37,17 +38,21 @@ public class ProductLoadTask extends AsyncTask<String, Void, List<Product>> {
      */
     @Override
     protected List<Product> doInBackground(String... params) {
-        Log.i(MagicConstants.LOG_TAG, "Loading categories...");
+        Log.i(LOG_TAG, "Loading categories...");
         String productName = params[0];
+        String category_id = params[1];
+
         List<Product> list = null;
         try {
             Dao<Product, Long> dao = DBHelperFactory.getHelper().getProductDao();
             QueryBuilder<Product, Long> queryBuilder = dao.queryBuilder();
-            // FIXME: 10/25/2016 change to normal category
-            queryBuilder.limit(COUNT).offset(startIndex).where().eq(Product.CATEGORY_ID, 3);
+
+            queryBuilder.limit(COUNT).offset(startIndex).where().eq(Product.CATEGORY_ID, category_id).and()
+                    .like(Product.NAME, String.format("%%%s%%", productName));
+
             list = dao.query(queryBuilder.prepare());
         } catch (SQLException e) {
-            Log.e(MagicConstants.LOG_TAG, "Loading categories due to onScroll");
+            Log.e(MagicConstants.LOG_TAG, "Loading categories due calling onScroll");
         }
         return list;
     }

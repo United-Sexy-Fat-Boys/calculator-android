@@ -8,7 +8,7 @@ import java.io.Serializable;
 public abstract class Entity implements Serializable {
     private static final long serialVersionUID = 7844562578732631588L;
 
-    @DatabaseField(generatedId = true, dataType = DataType.LONG)
+    @DatabaseField(generatedId = true, dataType = DataType.LONG, columnName = "_id")
     private long id;
 
     public long getId() {

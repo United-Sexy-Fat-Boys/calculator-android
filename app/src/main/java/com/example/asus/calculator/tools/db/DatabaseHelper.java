@@ -21,7 +21,7 @@ import java.sql.SQLException;
 
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME = "calculator.db";
-    private static final int INIT_VERSION = 24;
+    private static final int INIT_VERSION = 25;
 
     private Dao<Category, Long> categoryDao;
     private Dao<Dish, Long> dishDao;
