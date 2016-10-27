@@ -34,6 +34,7 @@ import java.util.List;
 public class SearchActivity extends ListActivity implements NavigationView.OnNavigationItemSelectedListener,
         SearchView.OnQueryTextListener, LoaderManager.LoaderCallbacks<Cursor> {
     private static final String LOG_TAG = SearchActivity.class.getSimpleName();
+    private static final String CATEGORY_EXTRA = "Category";
 
     private DrawerLayout drawerLayout;
     private NavigationView drawer;
@@ -65,9 +66,28 @@ public class SearchActivity extends ListActivity implements NavigationView.OnNav
         searchView.setOnQueryTextListener(this);
         suggestionsAdapter = new SuggestionsProductAdapter(this, null, true);
         searchView.setSuggestionsAdapter(suggestionsAdapter);
+        searchView.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
+            @Override
+            public boolean onSuggestionSelect(int position) {
+                Cursor cursor = suggestionsAdapter.getCursor();
+                cursor.moveToPosition(position);
+                String value = cursor.getString(cursor.getColumnIndex(Product.NAME));
+                Log.i(LOG_TAG, "Suggestion SELECTED -> pos: " + position + ", text: " + value);
+                return false;
+            }
+
+            @Override
+            public boolean onSuggestionClick(int position) {
+                Cursor cursor = suggestionsAdapter.getCursor();
+                cursor.moveToPosition(position);
+                String value = cursor.getString(cursor.getColumnIndex(Product.NAME));
+                Log.i(LOG_TAG, "Suggestion CLICKED -> pos: " + position + ", text: " + value);
+                return false;
+            }
+        });
 
         Intent intent = getIntent();
-        category = (Category) intent.getSerializableExtra("Category");
+        category = (Category) intent.getSerializableExtra(CATEGORY_EXTRA);
         Log.i(LOG_TAG, "received category -> id: " + category.getId() + ", name: " + category.getName());
         getLoaderManager().initLoader(0, null, this);
     }

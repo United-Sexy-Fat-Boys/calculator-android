@@ -29,6 +29,8 @@ import static com.example.asus.calculator.util.MagicConstants.ERR_MSG;
 
 public class CategoryFragment extends Fragment {
     private static final String LOG_TAG = CategoryFragment.class.getSimpleName();
+    private static final String CATEGORY_EXTRA = "Category";
+
     private GridView gridView;
     private CategoryAdapter adapter;
     private OnCategoryClickListener categoryListener;
@@ -75,7 +77,7 @@ public class CategoryFragment extends Fragment {
                 String mes = "pos: " + position + " content: " + list.get(position).getName();
                 Log.i(LOG_TAG, "Picked category - " + mes);
                 Intent intent = new Intent(getContext(), SearchActivity.class);
-                intent.putExtra("Category", list.get(position));
+                intent.putExtra(CATEGORY_EXTRA, list.get(position));
                 startActivity(intent);
                 //categoryListener.onCategoryClick(list.get(position));
             }
