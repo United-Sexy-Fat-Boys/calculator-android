@@ -35,11 +35,6 @@ public class MainFragment extends Fragment {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(getContext(), DishActivity.class);
-            // FIXME: 10/27/2016 remove after testing
-            Category category = new Category();
-            category.setName("Meat");
-            category.setId(3L);
-            intent.putExtra("Category", category);
             startActivity(intent);
         }
     }
@@ -49,6 +44,11 @@ public class MainFragment extends Fragment {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(getContext(), SearchActivity.class);
+            // FIXME: 10/27/2016 remove after testing
+            Category category = new Category();
+            category.setName("Meat");
+            category.setId(3L);
+            intent.putExtra("Category", category);
             startActivity(intent);
         }
     }
