@@ -38,7 +38,7 @@ public class ProductLoadTask extends AsyncTask<String, Void, List<Product>> {
      */
     @Override
     protected List<Product> doInBackground(String... params) {
-        Log.i(LOG_TAG, "Loading categories...");
+        Log.i(LOG_TAG, "Loading products...");
         String productName = params[0];
         String category_id = params[1];
 
@@ -52,7 +52,7 @@ public class ProductLoadTask extends AsyncTask<String, Void, List<Product>> {
 
             list = dao.query(queryBuilder.prepare());
         } catch (SQLException e) {
-            Log.e(MagicConstants.LOG_TAG, "Loading categories due calling onScroll");
+            Log.e(MagicConstants.LOG_TAG, "Loading products due calling onScroll");
         }
         return list;
     }
