@@ -65,7 +65,9 @@ public class SecondMainFragment extends Fragment {
     }
 
     private <T, ID> void load(Dao<T, ID> dao, int resId) throws SQLException {
-        dao.executeRaw("DELETE FROM " + dao.getTableName());
+        Log.i(LOG_TAG, "table name: " + dao.getTableName());
+        int rows = dao.executeRaw("DELETE FROM " + dao.getTableName());
+        Log.i(LOG_TAG, "rows deleted " + rows);
         InputStream is = getResources().openRawResource(resId);
         DataInputStream in = new DataInputStream(is);
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
