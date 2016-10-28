@@ -66,6 +66,8 @@ public class SearchActivity extends ListActivity implements NavigationView.OnNav
         searchView.setOnQueryTextListener(this);
         suggestionsAdapter = new SuggestionsProductAdapter(this, null, true);
         searchView.setSuggestionsAdapter(suggestionsAdapter);
+
+        searchView.setMaxWidth(Integer.MAX_VALUE);
         searchView.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
             @Override
             public boolean onSuggestionSelect(int position) {

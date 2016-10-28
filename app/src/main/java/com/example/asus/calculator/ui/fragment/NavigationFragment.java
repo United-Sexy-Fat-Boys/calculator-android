@@ -23,7 +23,7 @@ public class NavigationFragment extends Fragment implements Toolbar.OnMenuItemCl
         setHasOptionsMenu(true);
         View rootView = inflater.inflate(R.layout.fragment_navigation, container, false);
         Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolBar);
-        toolbar.setTitle("");
+        toolbar.setTitle("Choosing category");
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
 

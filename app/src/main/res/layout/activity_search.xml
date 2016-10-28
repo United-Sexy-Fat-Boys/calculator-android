@@ -27,12 +27,11 @@
 
         <ListView
             android:id="@android:id/list"
+            style="@style/ListViewStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:divider="@color/colorAccent"
-            android:dividerHeight="0.5dp"
             android:layout_below="@+id/separator_view" />
     </RelativeLayout>
 
