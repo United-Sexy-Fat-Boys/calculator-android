@@ -43,7 +43,9 @@ public class ProductAdapter extends ArrayAdapter<ProductModel> {
         ProductModel model = getItem(position);
         if (model != null) {
             holder.tvName.setText(model.getName());
-            holder.tvCalorie.setText(model.getCalories() + " cal");
+            String text = model.getCalories() + " " +
+                    getContext().getResources().getString(R.string.textView_secondary_list_product);
+            holder.tvCalorie.setText(text);
             holder.checkBox.setTag(model);
             holder.checkBox.setChecked(model.isChecked());
         }
