@@ -10,11 +10,13 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -41,8 +43,10 @@ public class SearchActivity extends ListActivity implements NavigationView.OnNav
     private NavigationView drawer;
     private ProductAdapter adapter;
     private SuggestionsProductAdapter suggestionsAdapter;
-    private String mCurFilter;
+    private FloatingActionButton floatButton;
     private SearchView searchView;
+
+    private String mCurFilter;
     private Category category;
 
     @Override
@@ -81,6 +85,16 @@ public class SearchActivity extends ListActivity implements NavigationView.OnNav
                 String value = cursor.getString(cursor.getColumnIndex(Product.NAME));
                 searchView.setQuery(value, true);
                 return true;
+            }
+        });
+
+        floatButton = (FloatingActionButton) findViewById(R.id.floating_button_product);
+        floatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), DishActivity.class);
+                intent.putExtra(DishActivity.DISH_ACTIVITY_EXTRA, R.id.fragment_product);
+                startActivity(intent);
             }
         });
 

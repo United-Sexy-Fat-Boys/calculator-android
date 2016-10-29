@@ -1,5 +1,6 @@
 package com.example.asus.calculator.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
@@ -15,6 +16,8 @@ import static com.example.asus.calculator.util.MagicConstants.LOG_TAG;
 
 
 public class DishActivity extends AppCompatActivity implements CategoryFragment.OnCategoryClickListener {
+    public static final String DISH_ACTIVITY_EXTRA = "Fragment";
+
     private FragmentFactory factory;
 
     @Override
@@ -22,9 +25,12 @@ public class DishActivity extends AppCompatActivity implements CategoryFragment.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dish);
         factory = FragmentFactory.getInstance();
+        Intent intent = getIntent();
+        int fragmentId = intent.getIntExtra(DISH_ACTIVITY_EXTRA, R.id.fragment_category);
+
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_top, factory.getFragment(R.id.fragment_navigation));
-        transaction.replace(R.id.frame_low, factory.getFragment(R.id.fragment_category));
+        transaction.replace(R.id.frame_low, factory.getFragment(fragmentId));
         transaction.commit();
     }
 

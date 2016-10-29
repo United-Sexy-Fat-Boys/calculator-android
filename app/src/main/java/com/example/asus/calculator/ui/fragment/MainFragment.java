@@ -35,6 +35,7 @@ public class MainFragment extends Fragment {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(getContext(), DishActivity.class);
+            intent.putExtra(DishActivity.DISH_ACTIVITY_EXTRA, R.id.fragment_category);
             startActivity(intent);
         }
     }
