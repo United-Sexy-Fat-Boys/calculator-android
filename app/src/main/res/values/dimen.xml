@@ -2,7 +2,10 @@
 <resources>
     <dimen name="gridView_vertical_spacing">4dp</dimen>
     <dimen name="gridView_horizontal_spacing">4dp</dimen>
-    <dimen name="gridView_padding">4dp</dimen>
+    <dimen name="gridView_padding_top">4dp</dimen>
+    <dimen name="gridView_padding_left">4dp</dimen>
+    <dimen name="gridView_padding_right">4dp</dimen>
+    <dimen name="gridView_padding_bottom">4dp</dimen>
 
     <dimen name="gridView_textView_height">48dp</dimen>
     <dimen name="textView_padding_top">16dp</dimen>

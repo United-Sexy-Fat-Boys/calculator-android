@@ -16,7 +16,9 @@
     <style name="GridViewStyle">
         <item name="android:horizontalSpacing">@dimen/gridView_horizontal_spacing</item>
         <item name="android:verticalSpacing">@dimen/gridView_vertical_spacing</item>
-        <item name="android:padding">@dimen/gridView_padding</item>
+        <item name="android:paddingRight">@dimen/gridView_padding_right</item>
+        <item name="android:paddingLeft">@dimen/gridView_padding_left</item>
+        <item name="android:paddingBottom">@dimen/gridView_padding_bottom</item>
     </style>
 
     <style name="EllipsizedTextView">

@@ -23,4 +23,12 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="67dp" />
 
+    <View
+        android:id="@+id/separator_view_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_alignParentBottom="true"
+
+        android:background="@color/colorAccent" />
+
 </RelativeLayout>
