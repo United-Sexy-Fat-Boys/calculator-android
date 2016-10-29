@@ -1,33 +1,43 @@
 package com.example.asus.calculator.model;
 
+import com.example.asus.calculator.model.persistent.Product;
+
 public class ProductModel {
-    private String name;
-    private String calorie;
+    private Product product = new Product();
     private boolean isChecked;
 
     public ProductModel() {
     }
 
-    // FIXME: 10/5/2016 remove
-    public ProductModel(String name, String calorie) {
-        this.name = name;
-        this.calorie = calorie;
+    public ProductModel(Product product) {
+        this.product.setId(product.getId());
+        this.product.setName(product.getName());
+        this.product.setCalories(product.getCalories());
+        this.product.setCategory(product.getCategory());
+    }
+
+    public long getId() {
+        return product.getId();
+    }
+
+    public void setId(long id) {
+        product.setId(id);
     }
 
     public String getName() {
-        return name;
+        return product.getName();
     }
 
     public void setName(String name) {
-        this.name = name;
+        product.setName(name);
     }
 
-    public String getCalorie() {
-        return calorie;
+    public long getCalories() {
+        return product.getCalories();
     }
 
-    public void setCalorie(String calorie) {
-        this.calorie = calorie;
+    public void setCalories(long calories) {
+        product.setCalories(calories);
     }
 
     public boolean isChecked() {

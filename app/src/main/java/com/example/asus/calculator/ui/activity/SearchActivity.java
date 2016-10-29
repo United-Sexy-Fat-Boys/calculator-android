@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.SearchView;
 
 import com.example.asus.calculator.R;
+import com.example.asus.calculator.model.ProductModel;
 import com.example.asus.calculator.model.persistent.Category;
 import com.example.asus.calculator.model.persistent.Product;
 import com.example.asus.calculator.tools.adapter.ProductAdapter;
@@ -54,7 +55,7 @@ public class SearchActivity extends ListActivity implements NavigationView.OnNav
         drawer = (NavigationView) findViewById(R.id.navigation_view);
         drawer.setNavigationItemSelectedListener(this);
 
-        List<Product> list = new ArrayList<>();
+        List<ProductModel> list = new ArrayList<>();
         adapter = new ProductAdapter(this, list);
         setListAdapter(adapter);
         getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
@@ -67,7 +68,6 @@ public class SearchActivity extends ListActivity implements NavigationView.OnNav
         suggestionsAdapter = new SuggestionsProductAdapter(this, null, true);
         searchView.setSuggestionsAdapter(suggestionsAdapter);
 
-        searchView.setMaxWidth(Integer.MAX_VALUE);
         searchView.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
             @Override
             public boolean onSuggestionSelect(int position) {
@@ -134,9 +134,9 @@ public class SearchActivity extends ListActivity implements NavigationView.OnNav
         return true;
     }
 
-    private ResponseListener<Product> listener = new ResponseListener<Product>() {
+    private ResponseListener<ProductModel> listener = new ResponseListener<ProductModel>() {
         @Override
-        public void onResponse(List<Product> list) {
+        public void onResponse(List<ProductModel> list) {
             adapter.clear();
             adapter.addAll(list);
         }

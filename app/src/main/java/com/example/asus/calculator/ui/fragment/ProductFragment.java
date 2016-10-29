@@ -11,6 +11,7 @@ import android.widget.ListView;
 import com.example.asus.calculator.R;
 import com.example.asus.calculator.model.persistent.Product;
 import com.example.asus.calculator.tools.adapter.ProductAdapter;
+import com.example.asus.calculator.util.ModelUtil;
 
 import java.util.ArrayList;
 
@@ -65,7 +66,8 @@ public class ProductFragment extends ListFragment {
         product.setCalories(1);
         list.add(product);
 
-        ProductAdapter adapter = new ProductAdapter(getContext(), list);
+
+        ProductAdapter adapter = new ProductAdapter(getContext(), ModelUtil.copyList(list));
         setListAdapter(adapter);
         getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
     }

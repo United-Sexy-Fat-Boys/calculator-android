@@ -3,28 +3,30 @@ package com.example.asus.calculator.tools.loader;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.asus.calculator.model.ProductModel;
 import com.example.asus.calculator.model.persistent.Product;
 import com.example.asus.calculator.tools.db.DBHelperFactory;
 import com.example.asus.calculator.util.MagicConstants;
+import com.example.asus.calculator.util.ModelUtil;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.QueryBuilder;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public class ProductLoadTask extends AsyncTask<String, Void, List<Product>> {
+public class ProductLoadTask extends AsyncTask<String, Void, List<ProductModel>> {
     private static final String LOG_TAG = ProductLoadTask.class.getSimpleName();
     public static final long COUNT = 10;
 
     private long startIndex;
-    private ResponseListener<Product> listener;
+    private ResponseListener<ProductModel> listener;
 
     /**
      * constructor for {@link ProductLoadTask}
      * @param startIndex - loading items, starting from specified index
      * @param listener - class, that handles returning {@link List} from AsyncTask
      */
-    public ProductLoadTask(long startIndex, ResponseListener<Product> listener) {
+    public ProductLoadTask(long startIndex, ResponseListener<ProductModel> listener) {
         this.startIndex = startIndex;
         this.listener = listener;
     }
@@ -37,12 +39,12 @@ public class ProductLoadTask extends AsyncTask<String, Void, List<Product>> {
      * @return list with result
      */
     @Override
-    protected List<Product> doInBackground(String... params) {
+    protected List<ProductModel> doInBackground(String... params) {
         Log.i(LOG_TAG, "Loading products...");
         String productName = params[0];
         String category_id = params[1];
 
-        List<Product> list = null;
+        List<ProductModel> listModel = null;
         try {
             Dao<Product, Long> dao = DBHelperFactory.getHelper().getProductDao();
             QueryBuilder<Product, Long> queryBuilder = dao.queryBuilder();
@@ -50,15 +52,17 @@ public class ProductLoadTask extends AsyncTask<String, Void, List<Product>> {
             queryBuilder.limit(COUNT).offset(startIndex).where().eq(Product.CATEGORY_ID, category_id).and()
                     .like(Product.NAME, String.format("%%%s%%", productName));
 
-            list = dao.query(queryBuilder.prepare());
+            List<Product> list = dao.query(queryBuilder.prepare());
+            listModel = ModelUtil.copyList(list);
         } catch (SQLException e) {
             Log.e(MagicConstants.LOG_TAG, "Loading products due calling onScroll");
         }
-        return list;
+
+        return listModel;
     }
 
     @Override
-    protected void onPostExecute(List<Product> products) {
+    protected void onPostExecute(List<ProductModel> products) {
         listener.onResponse(products);
     }
 }
