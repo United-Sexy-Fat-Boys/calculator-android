@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!-- TODO: remove hardcoded constants -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="140dp"
@@ -13,7 +13,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="8dp"
-        android:text="Setting for search"
+        android:text="@string/navigation_title_secondary"
         android:textColor="@color/titleTextSecondary"
         android:textSize="14sp" />
 
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:text="Category"
+        android:text="@string/navigation_title_primary"
         android:textColor="@color/titleTextPrimary"
         android:textSize="14sp" />
 

@@ -12,4 +12,7 @@
     <string name="search_hint">Search products…</string>
 
     <string name="textView_secondary_list_product">calories</string>
+
+    <string name="navigation_title_primary">Category</string>
+    <string name="navigation_title_secondary">Settings for searching</string>
 </resources>

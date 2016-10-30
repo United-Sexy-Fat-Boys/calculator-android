@@ -1,10 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="Crit">
-        <menu android:checkableBehavior="single">
-            <item android:title="Import" />
-            <item android:title="Gallery" />
-            <item android:title="Slideshow" />
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:title="Calorific value">
+        <menu>
+            <item
+                android:id="@+id/switch_high"
+                android:title="Above 400"
+                app:actionLayout="@layout/menu_switch"
+                app:showAsAction="always"
+                android:icon="@drawable/ic_arrow_right_black" />
+
+            <item
+                android:id="@+id/switch_medium"
+                android:title="Between"
+                app:actionLayout="@layout/menu_switch"
+                app:showAsAction="always"
+                android:icon="@drawable/ic_arrow_right_black" />
+
+            <item
+                android:id="@+id/switch_low"
+                android:title="Below 100"
+                app:actionLayout="@layout/menu_switch"
+                app:showAsAction="always"
+                android:icon="@drawable/ic_arrow_right_black" />
         </menu>
     </item>
 </menu>
