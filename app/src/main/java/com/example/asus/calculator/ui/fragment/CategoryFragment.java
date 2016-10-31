@@ -1,6 +1,5 @@
 package com.example.asus.calculator.ui.fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,8 +23,6 @@ import com.example.asus.calculator.ui.activity.SearchActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.asus.calculator.util.MagicConstants.ERR_MSG;
-
 
 public class CategoryFragment extends Fragment {
     private static final String LOG_TAG = CategoryFragment.class.getSimpleName();
@@ -33,21 +30,6 @@ public class CategoryFragment extends Fragment {
 
     private GridView gridView;
     private CategoryAdapter adapter;
-    private OnCategoryClickListener categoryListener;
-
-    public interface OnCategoryClickListener {
-        void onCategoryClick(Category category);
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            categoryListener = (OnCategoryClickListener) context;
-        } catch (ClassCastException e) {
-            Log.e(LOG_TAG, ERR_MSG, e);
-        }
-    }
 
     @Nullable
     @Override
@@ -79,7 +61,6 @@ public class CategoryFragment extends Fragment {
                 Intent intent = new Intent(getContext(), SearchActivity.class);
                 intent.putExtra(CATEGORY_EXTRA, list.get(position));
                 startActivity(intent);
-                //categoryListener.onCategoryClick(list.get(position));
             }
         });
 
