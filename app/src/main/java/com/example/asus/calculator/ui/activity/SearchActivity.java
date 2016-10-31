@@ -13,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
@@ -26,6 +27,7 @@ import com.example.asus.calculator.model.persistent.Category;
 import com.example.asus.calculator.model.persistent.Product;
 import com.example.asus.calculator.tools.adapter.ProductAdapter;
 import com.example.asus.calculator.tools.adapter.SuggestionsProductAdapter;
+import com.example.asus.calculator.tools.handler.SwitchButtonHandler;
 import com.example.asus.calculator.tools.loader.ProductLoadTask;
 import com.example.asus.calculator.tools.loader.ResponseListener;
 import com.example.asus.calculator.tools.loader.SuggestionProductLoader;
@@ -58,6 +60,12 @@ public class SearchActivity extends ListActivity implements NavigationView.OnNav
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer = (NavigationView) findViewById(R.id.navigation_view);
         drawer.setNavigationItemSelectedListener(this);
+
+        SwitchButtonHandler handler = new SwitchButtonHandler();
+        handler.addSwitchCompat((SwitchCompat) drawer.getMenu().findItem(R.id.switch_high).getActionView());
+        handler.addSwitchCompat((SwitchCompat) drawer.getMenu().findItem(R.id.switch_medium).getActionView());
+        handler.addSwitchCompat((SwitchCompat) drawer.getMenu().findItem(R.id.switch_low).getActionView());
+        handler.listenCalorificSwitches();
 
         List<ProductModel> list = new ArrayList<>();
         adapter = new ProductAdapter(this, list);
@@ -120,6 +128,7 @@ public class SearchActivity extends ListActivity implements NavigationView.OnNav
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Log.i(LOG_TAG, "onNavigationItemSelected()");
         return false;
     }
 
