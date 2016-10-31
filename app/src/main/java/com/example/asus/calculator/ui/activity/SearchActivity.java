@@ -18,6 +18,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -28,6 +29,7 @@ import com.example.asus.calculator.model.persistent.Product;
 import com.example.asus.calculator.tools.adapter.ProductAdapter;
 import com.example.asus.calculator.tools.adapter.SuggestionsProductAdapter;
 import com.example.asus.calculator.tools.handler.SwitchButtonHandler;
+import com.example.asus.calculator.tools.loader.LazyLoader;
 import com.example.asus.calculator.tools.loader.ProductLoadTask;
 import com.example.asus.calculator.tools.loader.ResponseListener;
 import com.example.asus.calculator.tools.loader.SuggestionProductLoader;
@@ -49,6 +51,7 @@ public class SearchActivity extends ListActivity implements NavigationView.OnNav
     private SearchView searchView;
 
     private String mCurFilter;
+    private String querySubmit;
     private Category category;
 
     @Override
@@ -71,6 +74,17 @@ public class SearchActivity extends ListActivity implements NavigationView.OnNav
         adapter = new ProductAdapter(this, list);
         setListAdapter(adapter);
         getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        getListView().setOnScrollListener(new LazyLoader() {
+            @Override
+            public void loadMore(AbsListView view, int firstVisibleItem,
+                                 int visibleItemCount, int totalItemCount) {
+                if (totalItemCount > 0) {
+                    Log.i(LOG_TAG, "loadMore()");
+                    ProductLoadTask task = new ProductLoadTask(adapter.getCount(), lazyListener);
+                    task.execute(querySubmit, Long.toString(category.getId()));
+                }
+            }
+        });
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) findViewById(R.id.search_view);
@@ -135,6 +149,8 @@ public class SearchActivity extends ListActivity implements NavigationView.OnNav
     @Override
     public boolean onQueryTextSubmit(String query) {
         Log.d(LOG_TAG, "onQueryTextSubmit: " + query);
+        searchView.clearFocus();
+        querySubmit = query;
         ProductLoadTask task = new ProductLoadTask(0, listener);
         task.execute(query, Long.toString(category.getId()));
         return true;
@@ -161,6 +177,13 @@ public class SearchActivity extends ListActivity implements NavigationView.OnNav
         @Override
         public void onResponse(List<ProductModel> list) {
             adapter.clear();
+            adapter.addAll(list);
+        }
+    };
+
+    private ResponseListener<ProductModel> lazyListener = new ResponseListener<ProductModel>() {
+        @Override
+        public void onResponse(List<ProductModel> list) {
             adapter.addAll(list);
         }
     };

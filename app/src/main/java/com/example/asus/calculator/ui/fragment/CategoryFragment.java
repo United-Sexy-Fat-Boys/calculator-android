@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ProgressBar;
@@ -45,7 +46,8 @@ public class CategoryFragment extends Fragment {
 
         gridView.setOnScrollListener(new LazyLoader() {
             @Override
-            public void loadMore() {
+            public void loadMore(AbsListView view, int firstVisibleItem,
+                                 int visibleItemCount, int totalItemCount) {
                 int startIndex = adapter.getCount();
                 CategoryLoadTask task = new CategoryLoadTask(startIndex, listener);
                 task.setProgressBar(progressBar);

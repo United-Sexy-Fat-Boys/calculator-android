@@ -38,9 +38,10 @@ public abstract class LazyLoader implements AbsListView.OnScrollListener {
         if (!isLoading && (visibleItemCount == (totalItemCount - firstVisibleItem)
                 /*&& this.currentScrollState == SCROLL_STATE_IDLE*/)) {
             isLoading = true;
-            loadMore();
+            loadMore(view, firstVisibleItem, visibleItemCount, totalItemCount);
         }
     }
 
-    public abstract void loadMore();
+    public abstract void loadMore(AbsListView view, int firstVisibleItem,
+                                  int visibleItemCount, int totalItemCount);
 }
