@@ -20,4 +20,6 @@
     <string name="navigation_menu_switch_high">Above 400</string>
     <string name="navigation_menu_switch_medium">Between</string>
     <string name="navigation_menu_switch_low">Below 100</string>
+
+    <string name="snackbar_text">Settings applied</string>
 </resources>

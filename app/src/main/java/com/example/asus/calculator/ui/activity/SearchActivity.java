@@ -7,20 +7,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.MenuItem;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.example.asus.calculator.R;
 import com.example.asus.calculator.model.ProductModel;
@@ -38,8 +40,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class SearchActivity extends ListActivity implements NavigationView.OnNavigationItemSelectedListener,
-        SearchView.OnQueryTextListener, LoaderManager.LoaderCallbacks<Cursor> {
+public class SearchActivity extends ListActivity implements SearchView.OnQueryTextListener,
+        LoaderManager.LoaderCallbacks<Cursor>, DrawerLayout.DrawerListener {
     private static final String LOG_TAG = SearchActivity.class.getSimpleName();
     private static final String CATEGORY_EXTRA = "Category";
 
@@ -62,7 +64,7 @@ public class SearchActivity extends ListActivity implements NavigationView.OnNav
         Log.i(LOG_TAG, "search Activity created");
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer = (NavigationView) findViewById(R.id.navigation_view);
-        drawer.setNavigationItemSelectedListener(this);
+        drawerLayout.addDrawerListener(this);
 
         SwitchButtonHandler handler = new SwitchButtonHandler();
         handler.addSwitchCompat((SwitchCompat) drawer.getMenu().findItem(R.id.switch_high).getActionView());
@@ -141,12 +143,6 @@ public class SearchActivity extends ListActivity implements NavigationView.OnNav
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Log.i(LOG_TAG, "onNavigationItemSelected()");
-        return false;
-    }
-
-    @Override
     public boolean onQueryTextSubmit(String query) {
         Log.d(LOG_TAG, "onQueryTextSubmit: " + query);
         searchView.clearFocus();
@@ -205,5 +201,34 @@ public class SearchActivity extends ListActivity implements NavigationView.OnNav
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         suggestionsAdapter.swapCursor(null);
+    }
+
+    @Override
+    public void onDrawerSlide(View drawerView, float slideOffset) {
+
+    }
+
+    @Override
+    public void onDrawerOpened(View drawerView) {
+
+    }
+
+    @Override
+    public void onDrawerClosed(View drawerView) {
+        // TODO: 10/31/2016 check on changes with preferences
+        Snackbar snackbar = Snackbar.make(floatButton, R.string.snackbar_text, Snackbar.LENGTH_SHORT);
+        snackbar.show();
+        View view = snackbar.getView();
+        TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        } else {
+            tv.setGravity(Gravity.CENTER_HORIZONTAL);
+        }
+    }
+
+    @Override
+    public void onDrawerStateChanged(int newState) {
+
     }
 }
