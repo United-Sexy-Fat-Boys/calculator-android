@@ -4,21 +4,10 @@ import android.widget.AbsListView;
 
 
 public abstract class LazyLoader implements AbsListView.OnScrollListener {
-    private static final int DEFAULT_THRESHOLD = 4;
-
     private boolean isLoading;
     private int previousTotal;
-    private int threshold = DEFAULT_THRESHOLD;
 
     private int currentScrollState;
-
-    public int getThreshold() {
-        return threshold;
-    }
-
-    public void setThreshold(int threshold) {
-        this.threshold = threshold;
-    }
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
