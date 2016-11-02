@@ -11,8 +11,6 @@ import com.example.asus.calculator.ui.fragment.NavigationFragment;
 import com.example.asus.calculator.ui.fragment.ProductFragment;
 import com.example.asus.calculator.ui.fragment.SecondMainFragment;
 
-import static com.example.asus.calculator.util.MagicConstants.ERR_MSG;
-
 public class FragmentFactory {
     private static final String LOG_TAG = FragmentFactory.class.getSimpleName();
     private static FragmentFactory instance = new FragmentFactory();
@@ -37,9 +35,9 @@ public class FragmentFactory {
         try {
             fragment = array.get(id).newInstance();
         } catch (InstantiationException e) {
-            Log.e(LOG_TAG, ERR_MSG, e);
+            Log.e(LOG_TAG, "getFragment()", e);
         } catch (IllegalAccessException e) {
-            Log.e(LOG_TAG, ERR_MSG, e);
+            Log.e(LOG_TAG, "getFragment()", e);
         }
         return fragment;
     }
