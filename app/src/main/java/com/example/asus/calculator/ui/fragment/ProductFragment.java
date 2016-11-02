@@ -10,7 +10,7 @@ import android.widget.ListView;
 
 import com.example.asus.calculator.R;
 import com.example.asus.calculator.model.ProductModel;
-import com.example.asus.calculator.tools.adapter.ProductAdapter;
+import com.example.asus.calculator.tools.adapter.ProductPickedAdapter;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class ProductFragment extends ListFragment {
 
         Bundle bundle = this.getArguments();
         List<ProductModel> productList = (List<ProductModel>) bundle.getSerializable(SEARCH_ACTIVITY_CHECKED_PRODUCTS);
-        ProductAdapter adapter = new ProductAdapter(getContext(), productList);
+        ProductPickedAdapter adapter = new ProductPickedAdapter(getContext(), productList);
         setListAdapter(adapter);
         getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
     }
