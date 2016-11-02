@@ -2,7 +2,11 @@ package com.example.asus.calculator.model;
 
 import com.example.asus.calculator.model.persistent.Product;
 
-public class ProductModel {
+import java.io.Serializable;
+
+public class ProductModel implements Serializable {
+    private static final long serialVersionUID = 8917108211861359530L;
+
     private Product product = new Product();
     private boolean isChecked;
 
@@ -14,6 +18,14 @@ public class ProductModel {
         this.product.setName(product.getName());
         this.product.setCalories(product.getCalories());
         this.product.setCategory(product.getCategory());
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public long getId() {
@@ -46,5 +58,21 @@ public class ProductModel {
 
     public void setChecked(boolean checked) {
         isChecked = checked;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ProductModel model = (ProductModel) o;
+
+        return product.equals(model.product);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return product.hashCode();
     }
 }

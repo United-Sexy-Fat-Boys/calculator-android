@@ -13,14 +13,17 @@ import android.widget.TextView;
 import com.example.asus.calculator.R;
 import com.example.asus.calculator.model.ProductModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class ProductAdapter extends ArrayAdapter<ProductModel> {
     private LayoutInflater inflater;
+    private List<ProductModel> checkedList;
 
     public ProductAdapter(Context context, List<ProductModel> list) {
         super(context, 0, list);
+        checkedList = new ArrayList<>();
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -53,6 +56,20 @@ public class ProductAdapter extends ArrayAdapter<ProductModel> {
         return convertView;
     }
 
+    public List<ProductModel> getCheckedList() {
+        return checkedList;
+    }
+
+    public void setCheckedList(List<ProductModel> checkedList) {
+        this.checkedList = checkedList;
+    }
+
+    @Override
+    public void clear() {
+        super.clear();
+        checkedList.clear();
+    }
+
     private static class ViewHolder {
         TextView tvName;
         TextView tvCalorie;
@@ -64,6 +81,12 @@ public class ProductAdapter extends ArrayAdapter<ProductModel> {
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             ProductModel model = (ProductModel) buttonView.getTag();
             model.setChecked(isChecked);
+
+            if (isChecked) {
+                checkedList.add(new ProductModel(model.getProduct()));
+            } else {
+                checkedList.remove(model);
+            }
         }
     };
 }

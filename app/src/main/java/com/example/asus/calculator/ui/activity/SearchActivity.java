@@ -37,20 +37,19 @@ import com.example.asus.calculator.tools.loader.ResponseListener;
 import com.example.asus.calculator.tools.loader.SuggestionProductLoader;
 import com.example.asus.calculator.util.PreferenceUtil;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.asus.calculator.util.MagicConstants.CALORIFIC_PREFERENCE;
 import static com.example.asus.calculator.util.MagicConstants.CATEGORY_INTENT_EXTRA;
 import static com.example.asus.calculator.util.MagicConstants.DISH_ACTIVITY_INTENT_EXTRA;
-
+import static com.example.asus.calculator.util.MagicConstants.SEARCH_ACTIVITY_CHECKED_PRODUCTS;
 
 public class SearchActivity extends ListActivity implements SearchView.OnQueryTextListener,
         LoaderManager.LoaderCallbacks<Cursor>, DrawerLayout.DrawerListener {
     private static final String LOG_TAG = SearchActivity.class.getSimpleName();
 
-    private DrawerLayout drawerLayout;
-    private NavigationView drawer;
     private ProductAdapter adapter;
     private SuggestionsProductAdapter suggestionsAdapter;
     private FloatingActionButton floatButton;
@@ -60,15 +59,33 @@ public class SearchActivity extends ListActivity implements SearchView.OnQueryTe
     private String querySubmit;
     private Category category;
 
+    private ResponseListener<ProductModel> listener = new ResponseListener<ProductModel>() {
+        @Override
+        public void onResponse(List<ProductModel> list) {
+            adapter.clear();
+            adapter.addAll(list);
+        }
+    };
+
+    private ResponseListener<ProductModel> lazyListener = new ResponseListener<ProductModel>() {
+        @Override
+        public void onResponse(List<ProductModel> list) {
+            adapter.addAll(list);
+        }
+    };
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
         Log.i(LOG_TAG, "search Activity created");
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer = (NavigationView) findViewById(R.id.navigation_view);
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        NavigationView drawer = (NavigationView) findViewById(R.id.navigation_view);
         drawerLayout.addDrawerListener(this);
+
+        Log.i(LOG_TAG, "Preferences have been refreshed");
+        PreferenceUtil.refresh(this, CALORIFIC_PREFERENCE);
 
         SwitchButtonHandler handler = new SwitchButtonHandler(this);
         handler.addSwitchCompat((SwitchCompat) drawer.getMenu().findItem(R.id.switch_high).getActionView());
@@ -123,6 +140,7 @@ public class SearchActivity extends ListActivity implements SearchView.OnQueryTe
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), DishActivity.class);
                 intent.putExtra(DISH_ACTIVITY_INTENT_EXTRA, R.id.fragment_product);
+                intent.putExtra(SEARCH_ACTIVITY_CHECKED_PRODUCTS, (Serializable) adapter.getCheckedList());
                 startActivity(intent);
             }
         });
@@ -175,22 +193,6 @@ public class SearchActivity extends ListActivity implements SearchView.OnQueryTe
         return true;
     }
 
-    private ResponseListener<ProductModel> listener = new ResponseListener<ProductModel>() {
-        @Override
-        public void onResponse(List<ProductModel> list) {
-            adapter.clear();
-            adapter.addAll(list);
-        }
-    };
-
-    private ResponseListener<ProductModel> lazyListener = new ResponseListener<ProductModel>() {
-        @Override
-        public void onResponse(List<ProductModel> list) {
-            adapter.addAll(list);
-        }
-    };
-
-
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         SuggestionProductLoader loader = new SuggestionProductLoader(this);
@@ -236,13 +238,5 @@ public class SearchActivity extends ListActivity implements SearchView.OnQueryTe
     @Override
     public void onDrawerStateChanged(int newState) {
 
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.i(LOG_TAG, "Preferences have been refreshed");
-        PreferenceUtil.refresh(this, CALORIFIC_PREFERENCE);
     }
 }
