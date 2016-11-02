@@ -8,6 +8,7 @@ import android.widget.CompoundButton;
 
 import com.example.asus.calculator.R;
 import com.example.asus.calculator.util.MagicConstants;
+import com.example.asus.calculator.util.PreferenceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,10 +58,9 @@ public class SwitchButtonHandler {
                     }
                 }
 
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putString(MagicConstants.CALORIFIC_PREFERENCE_COND_HIGH, valuesHigh[i]);
-                editor.putString(MagicConstants.CALORIFIC_PREFERENCE_COND_LOW, valuesLow[i]);
-                editor.apply();
+                PreferenceUtil.fill(preferences, valuesHigh[i], valuesLow[i]);
+            } else {
+                PreferenceUtil.refresh(preferences);
             }
         }
     }

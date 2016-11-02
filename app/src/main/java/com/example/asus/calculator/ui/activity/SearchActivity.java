@@ -35,10 +35,12 @@ import com.example.asus.calculator.tools.loader.LazyLoader;
 import com.example.asus.calculator.tools.loader.ProductLoadTask;
 import com.example.asus.calculator.tools.loader.ResponseListener;
 import com.example.asus.calculator.tools.loader.SuggestionProductLoader;
+import com.example.asus.calculator.util.PreferenceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.asus.calculator.util.MagicConstants.CALORIFIC_PREFERENCE;
 import static com.example.asus.calculator.util.MagicConstants.CATEGORY_INTENT_EXTRA;
 import static com.example.asus.calculator.util.MagicConstants.DISH_ACTIVITY_INTENT_EXTRA;
 
@@ -219,7 +221,7 @@ public class SearchActivity extends ListActivity implements SearchView.OnQueryTe
 
     @Override
     public void onDrawerClosed(View drawerView) {
-        //String builder = PreferenceParserUtil.addConditionsTest(this);
+        //String builder = PreferenceUtil.addConditionsTest(this);
         Snackbar snackbar = Snackbar.make(floatButton, R.string.snackbar_text, Snackbar.LENGTH_SHORT);
         snackbar.show();
         View view = snackbar.getView();
@@ -234,5 +236,13 @@ public class SearchActivity extends ListActivity implements SearchView.OnQueryTe
     @Override
     public void onDrawerStateChanged(int newState) {
 
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i(LOG_TAG, "Preferences have been refreshed");
+        PreferenceUtil.refresh(this, CALORIFIC_PREFERENCE);
     }
 }

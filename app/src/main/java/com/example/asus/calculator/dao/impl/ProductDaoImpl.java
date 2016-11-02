@@ -5,7 +5,7 @@ import android.content.Context;
 import com.example.asus.calculator.dao.ProductDao;
 import com.example.asus.calculator.model.persistent.Product;
 import com.example.asus.calculator.tools.db.DBHelperFactory;
-import com.example.asus.calculator.util.PreferenceParserUtil;
+import com.example.asus.calculator.util.PreferenceUtil;
 import com.j256.ormlite.dao.BaseDaoImpl;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
@@ -38,7 +38,7 @@ public class ProductDaoImpl extends BaseDaoImpl<Product, Long> implements Produc
         Where<Product, Long> where = queryBuilder.limit(limit).offset(offset).where().eq(Product.CATEGORY_ID, category_id).and()
                 .like(Product.NAME, String.format("%%%s%%", productName));
 
-        PreferenceParserUtil.addConditions(context, where, Product.CALORIES);
+        PreferenceUtil.addConditions(context, where, Product.CALORIES);
         return dao.query(queryBuilder.prepare());
     }
 }
