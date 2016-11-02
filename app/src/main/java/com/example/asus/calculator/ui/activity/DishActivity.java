@@ -8,10 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.asus.calculator.R;
 import com.example.asus.calculator.tools.fragment.factory.FragmentFactory;
+import com.example.asus.calculator.util.MagicConstants;
 
 
 public class DishActivity extends AppCompatActivity {
-    public static final String DISH_ACTIVITY_EXTRA = "Fragment";
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -19,7 +20,7 @@ public class DishActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dish);
         FragmentFactory factory = FragmentFactory.getInstance();
         Intent intent = getIntent();
-        int fragmentId = intent.getIntExtra(DISH_ACTIVITY_EXTRA, R.id.fragment_category);
+        int fragmentId = intent.getIntExtra(MagicConstants.DISH_ACTIVITY_INTENT_EXTRA, R.id.fragment_category);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_top, factory.getFragment(R.id.fragment_navigation));

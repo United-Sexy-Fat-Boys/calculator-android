@@ -20,6 +20,7 @@ import com.example.asus.calculator.tools.loader.CategoryLoadTask;
 import com.example.asus.calculator.tools.loader.LazyLoader;
 import com.example.asus.calculator.tools.loader.ResponseListener;
 import com.example.asus.calculator.ui.activity.SearchActivity;
+import com.example.asus.calculator.util.MagicConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,6 @@ import java.util.List;
 
 public class CategoryFragment extends Fragment {
     private static final String LOG_TAG = CategoryFragment.class.getSimpleName();
-    private static final String CATEGORY_EXTRA = "Category";
 
     private GridView gridView;
     private CategoryAdapter adapter;
@@ -61,7 +61,7 @@ public class CategoryFragment extends Fragment {
                 String mes = "pos: " + position + " content: " + list.get(position).getName();
                 Log.i(LOG_TAG, "Picked category - " + mes);
                 Intent intent = new Intent(getContext(), SearchActivity.class);
-                intent.putExtra(CATEGORY_EXTRA, list.get(position));
+                intent.putExtra(MagicConstants.CATEGORY_INTENT_EXTRA, list.get(position));
                 startActivity(intent);
             }
         });

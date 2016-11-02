@@ -35,6 +35,7 @@ import com.example.asus.calculator.tools.loader.LazyLoader;
 import com.example.asus.calculator.tools.loader.ProductLoadTask;
 import com.example.asus.calculator.tools.loader.ResponseListener;
 import com.example.asus.calculator.tools.loader.SuggestionProductLoader;
+import com.example.asus.calculator.util.MagicConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,6 @@ import java.util.List;
 public class SearchActivity extends ListActivity implements SearchView.OnQueryTextListener,
         LoaderManager.LoaderCallbacks<Cursor>, DrawerLayout.DrawerListener {
     private static final String LOG_TAG = SearchActivity.class.getSimpleName();
-    private static final String CATEGORY_EXTRA = "Category";
 
     private DrawerLayout drawerLayout;
     private NavigationView drawer;
@@ -88,6 +88,7 @@ public class SearchActivity extends ListActivity implements SearchView.OnQueryTe
             }
         });
 
+
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) findViewById(R.id.search_view);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
@@ -117,13 +118,13 @@ public class SearchActivity extends ListActivity implements SearchView.OnQueryTe
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), DishActivity.class);
-                intent.putExtra(DishActivity.DISH_ACTIVITY_EXTRA, R.id.fragment_product);
+                intent.putExtra(MagicConstants.DISH_ACTIVITY_INTENT_EXTRA, R.id.fragment_product);
                 startActivity(intent);
             }
         });
 
         Intent intent = getIntent();
-        category = (Category) intent.getSerializableExtra(CATEGORY_EXTRA);
+        category = (Category) intent.getSerializableExtra(MagicConstants.CATEGORY_INTENT_EXTRA);
         Log.i(LOG_TAG, "received category -> id: " + category.getId() + ", name: " + category.getName());
         getLoaderManager().initLoader(0, null, this);
     }

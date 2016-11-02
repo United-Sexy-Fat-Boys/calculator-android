@@ -13,6 +13,7 @@ import com.example.asus.calculator.R;
 import com.example.asus.calculator.model.persistent.Category;
 import com.example.asus.calculator.ui.activity.DishActivity;
 import com.example.asus.calculator.ui.activity.SearchActivity;
+import com.example.asus.calculator.util.MagicConstants;
 
 
 public class MainFragment extends Fragment {
@@ -35,7 +36,7 @@ public class MainFragment extends Fragment {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(getContext(), DishActivity.class);
-            intent.putExtra(DishActivity.DISH_ACTIVITY_EXTRA, R.id.fragment_category);
+            intent.putExtra(MagicConstants.DISH_ACTIVITY_INTENT_EXTRA, R.id.fragment_category);
             startActivity(intent);
         }
     }
