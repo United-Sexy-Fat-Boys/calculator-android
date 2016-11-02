@@ -29,7 +29,7 @@ public class PreferenceUtil {
     }
 
     public static void refresh(Context context, String preferencesName) {
-        SharedPreferences pref = context.getSharedPreferences(MagicConstants.CALORIFIC_PREFERENCE,
+        SharedPreferences pref = context.getSharedPreferences(preferencesName,
                 Context.MODE_PRIVATE);
         refresh(pref);
     }
