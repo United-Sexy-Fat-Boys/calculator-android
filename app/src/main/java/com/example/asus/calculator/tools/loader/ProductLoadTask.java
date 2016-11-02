@@ -6,7 +6,6 @@ import android.util.Log;
 import com.example.asus.calculator.model.ProductModel;
 import com.example.asus.calculator.model.persistent.Product;
 import com.example.asus.calculator.tools.db.DBHelperFactory;
-import com.example.asus.calculator.util.MagicConstants;
 import com.example.asus.calculator.util.ModelUtil;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.QueryBuilder;
@@ -55,7 +54,7 @@ public class ProductLoadTask extends AsyncTask<String, Void, List<ProductModel>>
             List<Product> list = dao.query(queryBuilder.prepare());
             listModel = ModelUtil.copyList(list);
         } catch (SQLException e) {
-            Log.e(MagicConstants.LOG_TAG, "Loading products due calling onScroll");
+            Log.e(LOG_TAG, "Loading products due calling onScroll");
         }
 
         return listModel;
