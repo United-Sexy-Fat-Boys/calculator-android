@@ -35,10 +35,12 @@ import com.example.asus.calculator.tools.loader.LazyLoader;
 import com.example.asus.calculator.tools.loader.ProductLoadTask;
 import com.example.asus.calculator.tools.loader.ResponseListener;
 import com.example.asus.calculator.tools.loader.SuggestionProductLoader;
-import com.example.asus.calculator.util.MagicConstants;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.asus.calculator.util.MagicConstants.CATEGORY_INTENT_EXTRA;
+import static com.example.asus.calculator.util.MagicConstants.DISH_ACTIVITY_INTENT_EXTRA;
 
 
 public class SearchActivity extends ListActivity implements SearchView.OnQueryTextListener,
@@ -66,7 +68,7 @@ public class SearchActivity extends ListActivity implements SearchView.OnQueryTe
         drawer = (NavigationView) findViewById(R.id.navigation_view);
         drawerLayout.addDrawerListener(this);
 
-        SwitchButtonHandler handler = new SwitchButtonHandler();
+        SwitchButtonHandler handler = new SwitchButtonHandler(this);
         handler.addSwitchCompat((SwitchCompat) drawer.getMenu().findItem(R.id.switch_high).getActionView());
         handler.addSwitchCompat((SwitchCompat) drawer.getMenu().findItem(R.id.switch_medium).getActionView());
         handler.addSwitchCompat((SwitchCompat) drawer.getMenu().findItem(R.id.switch_low).getActionView());
@@ -82,7 +84,7 @@ public class SearchActivity extends ListActivity implements SearchView.OnQueryTe
                                  int visibleItemCount, int totalItemCount) {
                 if (totalItemCount > 0) {
                     Log.i(LOG_TAG, "loadMore()");
-                    ProductLoadTask task = new ProductLoadTask(adapter.getCount(), lazyListener);
+                    ProductLoadTask task = new ProductLoadTask(adapter.getCount(), lazyListener, SearchActivity.this);
                     task.execute(querySubmit, Long.toString(category.getId()));
                 }
             }
@@ -118,15 +120,16 @@ public class SearchActivity extends ListActivity implements SearchView.OnQueryTe
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), DishActivity.class);
-                intent.putExtra(MagicConstants.DISH_ACTIVITY_INTENT_EXTRA, R.id.fragment_product);
+                intent.putExtra(DISH_ACTIVITY_INTENT_EXTRA, R.id.fragment_product);
                 startActivity(intent);
             }
         });
 
         Intent intent = getIntent();
-        category = (Category) intent.getSerializableExtra(MagicConstants.CATEGORY_INTENT_EXTRA);
+        category = (Category) intent.getSerializableExtra(CATEGORY_INTENT_EXTRA);
         Log.i(LOG_TAG, "received category -> id: " + category.getId() + ", name: " + category.getName());
         getLoaderManager().initLoader(0, null, this);
+
     }
 
     @Override
@@ -148,7 +151,7 @@ public class SearchActivity extends ListActivity implements SearchView.OnQueryTe
         Log.d(LOG_TAG, "onQueryTextSubmit: " + query);
         searchView.clearFocus();
         querySubmit = query;
-        ProductLoadTask task = new ProductLoadTask(0, listener);
+        ProductLoadTask task = new ProductLoadTask(0, listener, this);
         task.execute(query, Long.toString(category.getId()));
         return true;
     }
@@ -216,7 +219,7 @@ public class SearchActivity extends ListActivity implements SearchView.OnQueryTe
 
     @Override
     public void onDrawerClosed(View drawerView) {
-        // TODO: 10/31/2016 check on changes with preferences
+        //String builder = PreferenceParserUtil.addConditionsTest(this);
         Snackbar snackbar = Snackbar.make(floatButton, R.string.snackbar_text, Snackbar.LENGTH_SHORT);
         snackbar.show();
         View view = snackbar.getView();

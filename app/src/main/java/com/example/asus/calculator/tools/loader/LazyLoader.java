@@ -17,6 +17,11 @@ public abstract class LazyLoader implements AbsListView.OnScrollListener {
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem,
                          int visibleItemCount, int totalItemCount) {
+        // if adapter has been cleared
+        if (totalItemCount < previousTotal) {
+            previousTotal = 0;
+        }
+
         if (isLoading) {
             if (totalItemCount > previousTotal) {
                 isLoading = false;

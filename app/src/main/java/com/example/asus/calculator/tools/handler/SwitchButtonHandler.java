@@ -1,8 +1,13 @@
 package com.example.asus.calculator.tools.handler;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.widget.CompoundButton;
+
+import com.example.asus.calculator.R;
+import com.example.asus.calculator.util.MagicConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +16,17 @@ public class SwitchButtonHandler {
     private static final String LOG_TAG = SwitchButtonHandler.class.getSimpleName();
     private static final int DEFAULT_CAPACITY = 4;
 
+    private SharedPreferences preferences;
     private List<SwitchCompat> switchCompats;
+    private String[] valuesHigh;
+    private String[] valuesLow;
 
-    public SwitchButtonHandler() {
+    public SwitchButtonHandler(Context context) {
+        preferences = context.getSharedPreferences(MagicConstants.CALORIFIC_PREFERENCE,
+                Context.MODE_PRIVATE);
         switchCompats = new ArrayList<>(DEFAULT_CAPACITY);
+        valuesHigh = context.getResources().getStringArray(R.array.calorific_values_high);
+        valuesLow = context.getResources().getStringArray(R.array.calorific_values_low);
     }
 
     public void addSwitchCompat(SwitchCompat switchCompat) {
@@ -44,6 +56,11 @@ public class SwitchButtonHandler {
                         switchCompats.get(j).setChecked(false);
                     }
                 }
+
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString(MagicConstants.CALORIFIC_PREFERENCE_COND_HIGH, valuesHigh[i]);
+                editor.putString(MagicConstants.CALORIFIC_PREFERENCE_COND_LOW, valuesLow[i]);
+                editor.apply();
             }
         }
     }

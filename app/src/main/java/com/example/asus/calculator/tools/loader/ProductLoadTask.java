@@ -1,14 +1,13 @@
 package com.example.asus.calculator.tools.loader;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.asus.calculator.dao.ProductDao;
 import com.example.asus.calculator.model.ProductModel;
-import com.example.asus.calculator.model.persistent.Product;
 import com.example.asus.calculator.tools.db.DBHelperFactory;
 import com.example.asus.calculator.util.ModelUtil;
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.stmt.QueryBuilder;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -19,15 +18,17 @@ public class ProductLoadTask extends AsyncTask<String, Void, List<ProductModel>>
 
     private long startIndex;
     private ResponseListener<ProductModel> listener;
+    private Context context;
 
     /**
      * constructor for {@link ProductLoadTask}
      * @param startIndex - loading items, starting from specified index
      * @param listener - class, that handles returning {@link List} from AsyncTask
      */
-    public ProductLoadTask(long startIndex, ResponseListener<ProductModel> listener) {
+    public ProductLoadTask(long startIndex, ResponseListener<ProductModel> listener, Context context) {
         this.startIndex = startIndex;
         this.listener = listener;
+        this.context = context;
     }
 
     /**
@@ -45,14 +46,9 @@ public class ProductLoadTask extends AsyncTask<String, Void, List<ProductModel>>
 
         List<ProductModel> listModel = null;
         try {
-            Dao<Product, Long> dao = DBHelperFactory.getHelper().getProductDao();
-            QueryBuilder<Product, Long> queryBuilder = dao.queryBuilder();
-
-            queryBuilder.limit(COUNT).offset(startIndex).where().eq(Product.CATEGORY_ID, category_id).and()
-                    .like(Product.NAME, String.format("%%%s%%", productName));
-
-            List<Product> list = dao.query(queryBuilder.prepare());
-            listModel = ModelUtil.copyList(list);
+            ProductDao dao = DBHelperFactory.getHelper().getProductDao();
+            listModel = ModelUtil.copyList(dao.getLimitedWithNameAndCalories(COUNT, startIndex,
+                    category_id, productName, context));
         } catch (SQLException e) {
             Log.e(LOG_TAG, "Loading products due calling onScroll");
         }
