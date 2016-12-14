@@ -18,4 +18,20 @@ public class ModelUtil {
         }
         return null;
     }
+
+    public static List<ProductModel> getComparedList(List<ProductModel> old, List<ProductModel> fresh) {
+        for (int i = 0; i < fresh.size(); i++) {
+            boolean isEquals = false;
+            for (int j = 0; j < old.size(); j++) {
+                if (old.get(j).getId() == fresh.get(i).getId()) {
+                    isEquals = true;
+                }
+            }
+
+            if (!isEquals) {
+                old.add(fresh.get(i));
+            }
+        }
+        return old;
+    }
 }

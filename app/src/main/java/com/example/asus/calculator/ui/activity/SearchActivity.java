@@ -35,6 +35,7 @@ import com.example.asus.calculator.tools.loader.LazyLoader;
 import com.example.asus.calculator.tools.loader.ProductLoadTask;
 import com.example.asus.calculator.tools.loader.ResponseListener;
 import com.example.asus.calculator.tools.loader.SuggestionProductLoader;
+import com.example.asus.calculator.util.MagicConstants;
 import com.example.asus.calculator.util.PreferenceUtil;
 
 import java.io.Serializable;
@@ -93,6 +94,12 @@ public class SearchActivity extends ListActivity implements SearchView.OnQueryTe
         handler.addSwitchCompat((SwitchCompat) drawer.getMenu().findItem(R.id.switch_low).getActionView());
         handler.listenCalorificSwitches();
 
+        Intent intent = getIntent();
+        final Intent oldIntent = new Intent(getApplicationContext(), DishActivity.class);
+        if (intent.getSerializableExtra(MagicConstants.SEARCH_ACTIVITY_CHECKED_PRODUCTS) != null) {
+            String key = MagicConstants.OLD_CHECKED_PRODUCTS;
+            oldIntent.putExtra(key, intent.getSerializableExtra(MagicConstants.SEARCH_ACTIVITY_CHECKED_PRODUCTS));
+        }
         List<ProductModel> list = new ArrayList<>();
         adapter = new ProductAdapter(this, list);
         setListAdapter(adapter);
@@ -138,15 +145,15 @@ public class SearchActivity extends ListActivity implements SearchView.OnQueryTe
         floatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), DishActivity.class);
-                intent.putExtra(DISH_ACTIVITY_INTENT_EXTRA, R.id.fragment_product);
-                intent.putExtra(SEARCH_ACTIVITY_CHECKED_PRODUCTS, (Serializable) adapter.getCheckedList());
-                startActivity(intent);
+                oldIntent.putExtra(DISH_ACTIVITY_INTENT_EXTRA, R.id.fragment_product);
+                oldIntent.putExtra(SEARCH_ACTIVITY_CHECKED_PRODUCTS, (Serializable) adapter.getCheckedList());
+                startActivity(oldIntent);
             }
         });
 
-        Intent intent = getIntent();
         category = (Category) intent.getSerializableExtra(CATEGORY_INTENT_EXTRA);
+        TextView textView = (TextView) drawer.getHeaderView(0).findViewById(R.id.tv_navigation_header_primary);
+        textView.setText("Category: " + category.getName());
         Log.i(LOG_TAG, "received category -> id: " + category.getId() + ", name: " + category.getName());
         getLoaderManager().initLoader(0, null, this);
 

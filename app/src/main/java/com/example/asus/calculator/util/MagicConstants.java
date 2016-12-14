@@ -7,4 +7,5 @@ public class MagicConstants {
     public static final String CALORIFIC_PREFERENCE_COND_HIGH = "Calorie_high";
     public static final String CALORIFIC_PREFERENCE_COND_LOW = "Calorie_low";
     public static final String SEARCH_ACTIVITY_CHECKED_PRODUCTS = "Checked_list";
+    public static final String OLD_CHECKED_PRODUCTS = "Old_checked_products";
 }

@@ -60,12 +60,16 @@ public class CategoryFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String mes = "pos: " + position + " content: " + list.get(position).getName();
                 Log.i(LOG_TAG, "Picked category - " + mes);
+                Bundle bundle = CategoryFragment.this.getArguments();
+                String key = MagicConstants.SEARCH_ACTIVITY_CHECKED_PRODUCTS;
                 Intent intent = new Intent(getContext(), SearchActivity.class);
                 intent.putExtra(MagicConstants.CATEGORY_INTENT_EXTRA, list.get(position));
+                if (bundle != null) {
+                    intent.putExtra(key, bundle.getSerializable(key));
+                }
                 startActivity(intent);
             }
         });
-
 
         return rootView;
     }

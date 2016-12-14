@@ -20,4 +20,12 @@
         android:layout_centerHorizontal="true"
         android:text="@string/button_upper_main_tab" />
 
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/iv_main_fragment" />
+
 </RelativeLayout>

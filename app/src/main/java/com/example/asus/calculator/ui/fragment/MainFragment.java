@@ -8,12 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.asus.calculator.R;
 import com.example.asus.calculator.model.persistent.Category;
+import com.example.asus.calculator.tools.adapter.picasso.CircleTransformation;
 import com.example.asus.calculator.ui.activity.DishActivity;
 import com.example.asus.calculator.ui.activity.SearchActivity;
 import com.example.asus.calculator.util.MagicConstants;
+import com.squareup.picasso.Picasso;
 
 
 public class MainFragment extends Fragment {
@@ -29,6 +32,14 @@ public class MainFragment extends Fragment {
 
         btnLower.setOnClickListener(new LowerOnClickListener());
         btnUpper.setOnClickListener(new UpperOnClickListener());
+        ImageView imageView = (ImageView) rootView.findViewById(R.id.iv_main_fragment);
+        Picasso.with(getActivity())
+                .load(R.drawable.main_pic)
+                //.resize(600, 600)
+                .fit()
+                .centerCrop()
+                .transform(new CircleTransformation())
+                .into(imageView);
         return rootView;
     }
 
