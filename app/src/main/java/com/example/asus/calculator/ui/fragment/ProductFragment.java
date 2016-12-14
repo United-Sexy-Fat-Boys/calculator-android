@@ -6,6 +6,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -28,6 +31,11 @@ public class ProductFragment extends ListFragment implements View.OnClickListene
 
     private Button btnAdd;
     private List<ProductModel> productList;
+    private ProductPickedAdapter adapter;
+
+    public ProductFragment() {
+        setHasOptionsMenu(true);
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -39,9 +47,15 @@ public class ProductFragment extends ListFragment implements View.OnClickListene
             Log.i(LOG_TAG, "amount of products: " + productList.size());
         }
 
-        ProductPickedAdapter adapter = new ProductPickedAdapter(getContext(), productList);
+        adapter = new ProductPickedAdapter(getContext(), productList);
         setListAdapter(adapter);
         getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -62,5 +76,23 @@ public class ProductFragment extends ListFragment implements View.OnClickListene
             intent.putExtra(SEARCH_ACTIVITY_CHECKED_PRODUCTS, (Serializable) productList);
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_fragment_product, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_item_remove_products:
+                Log.i(LOG_TAG, "menu item clicked: " + item.getItemId());
+                adapter.removeChecked();
+                adapter.notifyDataSetChanged();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

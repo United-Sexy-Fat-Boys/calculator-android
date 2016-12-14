@@ -34,4 +34,15 @@ public class ModelUtil {
         }
         return old;
     }
+
+    public static boolean clearDuplicates(List<ProductModel> src, ProductModel obj) {
+        for (int i = 0; i < src.size(); i++) {
+            if (src.contains(obj)) {
+                src.remove(obj);
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
