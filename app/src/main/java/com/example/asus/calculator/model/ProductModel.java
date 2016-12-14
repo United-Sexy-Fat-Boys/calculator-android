@@ -9,6 +9,7 @@ public class ProductModel implements Serializable {
 
     private Product product = new Product();
     private boolean isChecked;
+    private int mass = 100;
 
     public ProductModel() {
     }
@@ -58,6 +59,14 @@ public class ProductModel implements Serializable {
 
     public void setChecked(boolean checked) {
         isChecked = checked;
+    }
+
+    public int getMass() {
+        return mass;
+    }
+
+    public void setMass(int mass) {
+        this.mass = mass;
     }
 
     @Override

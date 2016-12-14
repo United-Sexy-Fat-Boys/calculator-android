@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.asus.calculator.R;
@@ -19,6 +20,7 @@ import java.util.List;
 
 public class ProductPickedAdapter extends ArrayAdapter<ProductModel> {
     private static final String LOG_TAG = ProductPickedAdapter.class.getSimpleName();
+    private static final int MASS_CHANGE_VALUE = 50;
 
     private LayoutInflater inflater;
     private List<ProductModel> checkedList;
@@ -39,8 +41,12 @@ public class ProductPickedAdapter extends ArrayAdapter<ProductModel> {
             holder.tvName = (TextView) convertView.findViewById(R.id.tv_product_name);
             holder.tvCalorie = (TextView) convertView.findViewById(R.id.tv_calorie);
             holder.checkBox = (CheckBox) convertView.findViewById(R.id.cb_product_odd);
+            holder.ibPlus = (ImageButton) convertView.findViewById(R.id.ib_more_mass);
+            holder.ibMinus = (ImageButton) convertView.findViewById(R.id.ib_less_mass);
             convertView.setTag(holder);
             holder.checkBox.setOnCheckedChangeListener(listener);
+            holder.ibMinus.setOnClickListener(massChangerListener);
+            holder.ibPlus.setOnClickListener(massChangerListener);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
@@ -49,10 +55,13 @@ public class ProductPickedAdapter extends ArrayAdapter<ProductModel> {
         if (model != null) {
             holder.tvName.setText(model.getName());
             String text = model.getCalories() + " " +
-                    getContext().getResources().getString(R.string.textView_secondary_list_product);
+                    getContext().getResources().getString(R.string.textView_secondary_list_product) + ", " +
+                    "mass: " + model.getMass() + " g";
             holder.tvCalorie.setText(text);
             holder.checkBox.setTag(model);
             holder.checkBox.setChecked(model.isChecked());
+            holder.ibPlus.setTag(model);
+            holder.ibMinus.setTag(model);
         }
 
         return convertView;
@@ -74,7 +83,6 @@ public class ProductPickedAdapter extends ArrayAdapter<ProductModel> {
             checkedList.remove(i);
         }
 
-
         Log.i(LOG_TAG, "items in list after remove: " + getCount());
         Log.i(LOG_TAG, "items in checkedList after remove: " + checkedList.size());
 
@@ -90,6 +98,8 @@ public class ProductPickedAdapter extends ArrayAdapter<ProductModel> {
         TextView tvName;
         TextView tvCalorie;
         CheckBox checkBox;
+        ImageButton ibPlus;
+        ImageButton ibMinus;
     }
 
     private CompoundButton.OnCheckedChangeListener listener = new CompoundButton.OnCheckedChangeListener() {
@@ -102,6 +112,29 @@ public class ProductPickedAdapter extends ArrayAdapter<ProductModel> {
                 checkedList.add(new ProductModel(model.getProduct()));
             } else {
                 checkedList.remove(model);
+            }
+        }
+    };
+
+    private View.OnClickListener massChangerListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.ib_more_mass:
+                    Log.d(LOG_TAG, "+ clicked");
+                    ProductModel modelPlus = (ProductModel) v.getTag();
+                    modelPlus.setMass(modelPlus.getMass() + MASS_CHANGE_VALUE);
+                    notifyDataSetChanged();
+                    break;
+
+                case R.id.ib_less_mass:
+                    ProductModel modelMinus = (ProductModel) v.getTag();
+                    if (modelMinus.getMass() > MASS_CHANGE_VALUE) {
+                        modelMinus.setMass(modelMinus.getMass() - MASS_CHANGE_VALUE);
+                        notifyDataSetChanged();
+                    }
+                    Log.d(LOG_TAG, "- clicked");
+                    break;
             }
         }
     };

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -32,4 +33,33 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/tv_product_name"
         tools:text="Sample secondary text" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/plus"
+        android:id="@+id/ib_more_mass"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
+        android:layout_alignTop="@+id/cb_product_odd"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/minus"
+        android:id="@+id/ib_less_mass"
+        android:background="@null"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_alignTop="@+id/ib_more_mass"
+        android:layout_toLeftOf="@+id/ib_more_mass"
+        android:layout_toStartOf="@+id/ib_more_mass" />
+
+
 </RelativeLayout>
