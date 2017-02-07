@@ -1,5 +1,6 @@
 package com.example.asus.calculator.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,9 +12,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.asus.calculator.R;
+import com.example.asus.calculator.ui.activity.MainActivity;
 
 
 public class NavigationFragment extends Fragment implements Toolbar.OnMenuItemClickListener {
@@ -42,7 +43,8 @@ public class NavigationFragment extends Fragment implements Toolbar.OnMenuItemCl
         int id = item.getItemId();
         switch (id) {
             case R.id.menu_search_settings:
-                Toast.makeText(getContext(), "doesn't work", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getContext(), MainActivity.class);
+                startActivity(intent);
                 break;
         }
         return super.onOptionsItemSelected(item);

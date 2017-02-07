@@ -7,6 +7,11 @@
             android:id="@+id/menu_item_remove_products"
             android:title="Remove products"
             app:showAsAction="never" />
+
+        <item
+            android:id="@+id/menu_item_save_dish"
+            android:title="Save dish"
+            app:showAsAction="never" />
     </group>
 
 </menu>

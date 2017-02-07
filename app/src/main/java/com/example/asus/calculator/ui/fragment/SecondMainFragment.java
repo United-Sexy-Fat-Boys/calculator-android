@@ -8,9 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.asus.calculator.R;
+import com.example.asus.calculator.dao.CategoryDao;
 import com.example.asus.calculator.model.persistent.Category;
+import com.example.asus.calculator.model.persistent.Dish;
 import com.example.asus.calculator.model.persistent.Product;
 import com.example.asus.calculator.tools.db.DBHelperFactory;
 import com.j256.ormlite.dao.Dao;
@@ -21,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
+import java.util.List;
 
 
 //SUPER BAD CODE!!!!
@@ -61,6 +65,34 @@ public class SecondMainFragment extends Fragment {
                 }
             }
         });
+
+
+        Button getDishButton = (Button) rootView.findViewById(R.id.button_show_dish);
+        final TextView tvDishText = (TextView) rootView.findViewById(R.id.tv_demonstrate_dish);
+        getDishButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Dao<Dish, Long> dao = DBHelperFactory.getHelper().getDishDao();
+                    CategoryDao categoryDao = DBHelperFactory.getHelper().getCategoryDao();
+                    List<Dish> dishes = dao.queryForAll();
+                    Log.i(LOG_TAG, "Amount of dishes: " + dishes.size());
+                    StringBuilder builder = new StringBuilder();
+                    for (int i = 0; i < dishes.size(); i++) {
+                        Dish dish = dishes.get(i);
+                        dao.refresh(dish);
+                        String categoryName = categoryDao.queryForId(dish.getCategory().getId()).getName();
+                        dish.getCategory().setName(categoryName);
+                        builder.append(dish).append("\r\n");
+                    }
+
+                    tvDishText.setText(builder);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         return rootView;
     }
 
