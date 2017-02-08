@@ -2,6 +2,7 @@ package com.example.asus.calculator.tools.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import com.example.asus.calculator.model.ProductModel;
 import java.util.List;
 
 public class ProductRecycleAdapter extends RecyclerView.Adapter<ProductRecycleAdapter.ViewHolder> {
+    private static final String LOG_TAG = ProductRecycleAdapter.class.getSimpleName();
+
     private List<ProductModel> list;
     private Context context;
 
@@ -33,15 +36,18 @@ public class ProductRecycleAdapter extends RecyclerView.Adapter<ProductRecycleAd
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final ProductModel model = list.get(position);
+        ProductModel model = list.get(position);
+        Log.d(LOG_TAG, "before:: " + model.getName() + " : " + model.isChecked());
         holder.tvName.setText(model.getName());
         String text = String.format("%s %s", model.getCalories(),
                 context.getResources().getString(R.string.textView_secondary_list_product));
         holder.tvCalorie.setText(text);
         holder.checkBox.setTag(model);
+        holder.checkBox.setOnCheckedChangeListener(null);
         holder.checkBox.setChecked(model.isChecked());
-
-
+        Log.d(LOG_TAG, "after:: " + model.getName() + " : " + model.isChecked());
+        holder.checkBox.setOnCheckedChangeListener(null);
+        holder.checkBox.setOnCheckedChangeListener(holder);
     }
 
     @Override
@@ -54,6 +60,8 @@ public class ProductRecycleAdapter extends RecyclerView.Adapter<ProductRecycleAd
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener {
+        private static final String LOG_TAG = ViewHolder.class.getSimpleName();
+
         TextView tvName;
         TextView tvCalorie;
         CheckBox checkBox;
@@ -70,7 +78,7 @@ public class ProductRecycleAdapter extends RecyclerView.Adapter<ProductRecycleAd
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             ProductModel model = (ProductModel) buttonView.getTag();
             model.setChecked(isChecked);
-            checkBox.setChecked(isChecked);
+            Log.d(LOG_TAG, model.getName() + " : " + isChecked);
         }
     }
 }
