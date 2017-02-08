@@ -14,14 +14,16 @@ import com.example.asus.calculator.R;
 import com.example.asus.calculator.model.persistent.Category;
 import com.example.asus.calculator.tools.adapter.picasso.CircleTransformation;
 import com.example.asus.calculator.ui.activity.DishActivity;
+import com.example.asus.calculator.ui.activity.RecycleActivity;
 import com.example.asus.calculator.ui.activity.SearchActivity;
 import com.example.asus.calculator.util.MagicConstants;
 import com.squareup.picasso.Picasso;
 
 
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements View.OnClickListener {
     private Button btnLower;
     private Button btnUpper;
+    private Button btnNew;
 
     @Nullable
     @Override
@@ -29,9 +31,11 @@ public class MainFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         btnLower = (Button) rootView.findViewById(R.id.btnLower);
         btnUpper = (Button) rootView.findViewById(R.id.btnUpper);
+        btnNew = (Button) rootView.findViewById(R.id.btnNew);
 
-        btnLower.setOnClickListener(new LowerOnClickListener());
-        btnUpper.setOnClickListener(new UpperOnClickListener());
+        btnLower.setOnClickListener(this);
+        btnUpper.setOnClickListener(this);
+        btnNew.setOnClickListener(this);
         ImageView imageView = (ImageView) rootView.findViewById(R.id.iv_main_fragment);
         Picasso.with(getActivity())
                 .load(R.drawable.main_pic)
@@ -43,26 +47,34 @@ public class MainFragment extends Fragment {
         return rootView;
     }
 
-    private class LowerOnClickListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(getContext(), DishActivity.class);
-            intent.putExtra(MagicConstants.DISH_ACTIVITY_INTENT_EXTRA, R.id.fragment_category);
-            startActivity(intent);
-        }
-    }
+    @Override
+    public void onClick(View v) {
+        int viewId = v.getId();
+        Intent intent;
+        switch (viewId) {
+            case R.id.btnLower:
+                intent = new Intent(getContext(), DishActivity.class);
+                intent.putExtra(MagicConstants.DISH_ACTIVITY_INTENT_EXTRA, R.id.fragment_category);
+                startActivity(intent);
+                break;
 
-    // FIXME: 10/9/2016 temporary solution
-    private class UpperOnClickListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(getContext(), SearchActivity.class);
-            // FIXME: 10/27/2016 remove after testing
-            Category category = new Category();
-            category.setName("Meat");
-            category.setId(3L);
-            intent.putExtra("Category", category);
-            startActivity(intent);
+            case R.id.btnUpper:
+                intent = new Intent(getContext(), SearchActivity.class);
+                // FIXME: 10/27/2016 remove after testing
+                Category category = new Category();
+                category.setName("Meat");
+                category.setId(3L);
+                intent.putExtra("Category", category);
+                startActivity(intent);
+                break;
+
+            case R.id.btnNew:
+                intent = new Intent(getContext(), RecycleActivity.class);
+                startActivity(intent);
+                break;
+
+            default:
+                throw new IllegalArgumentException("unknown view");
         }
     }
 }

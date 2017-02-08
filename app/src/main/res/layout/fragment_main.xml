@@ -26,6 +26,15 @@
 
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/iv_main_fragment" />
+        android:id="@+id/iv_main_fragment"
+        android:contentDescription="@string/image_view_cnt_descr_main_tab" />
+
+    <Button
+        android:text="@string/button_new_main_tab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnUpper"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/btnNew" />
 
 </RelativeLayout>

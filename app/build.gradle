@@ -29,6 +29,7 @@ dependencies {
     compile 'com.j256.ormlite:ormlite-core:5.0'
     compile 'com.j256.ormlite:ormlite-android:5.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.hannesdorfmann:adapterdelegates3:3.0.1'
 
     //for sqllite view
     /* compile 'com.idescout.sql:sqlscout-server:2.0'*/
