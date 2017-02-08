@@ -10,7 +10,7 @@ import android.util.Log;
 
 import com.example.asus.calculator.R;
 import com.example.asus.calculator.model.ProductModel;
-import com.example.asus.calculator.tools.adapter.ProductModelRecycleAdapter;
+import com.example.asus.calculator.tools.adapter.ProductRecycleAdapter;
 import com.example.asus.calculator.tools.loader.LazyLoaderRecycle;
 import com.example.asus.calculator.tools.loader.ProductFullLoadTask;
 import com.example.asus.calculator.tools.loader.ResponseListener;
@@ -22,7 +22,7 @@ import java.util.List;
 public class RecycleActivity extends AppCompatActivity {
     private static final String LOG_TAG = RecycleActivity.class.getSimpleName();
 
-    private ProductModelRecycleAdapter adapter;
+    private ProductRecycleAdapter adapter;
     private RecyclerView recyclerView;
     private ResponseListener<ProductModel> lazyListener;
 
@@ -33,7 +33,7 @@ public class RecycleActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.recycleView);
         List<ProductModel> list = new ArrayList<>();
-        adapter = new ProductModelRecycleAdapter(this, list);
+        adapter = new ProductRecycleAdapter(list, this);
 
         lazyListener = new ResponseListener<ProductModel>() {
             @Override

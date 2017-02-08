@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.example.asus.calculator.R;
@@ -48,11 +49,11 @@ public class ProductAdapterDelegate extends AdapterDelegate<List<ProductModel>> 
         vh.tvCalorie.setText(text);
         vh.checkBox.setChecked(model.isChecked());
 
-        vh.checkBox.setOnClickListener(new View.OnClickListener() {
+        vh.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                model.setChecked(!model.isChecked());
-                vh.checkBox.setChecked(model.isChecked());
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                model.setChecked(isChecked);
+                vh.checkBox.setChecked(isChecked);
             }
         });
     }

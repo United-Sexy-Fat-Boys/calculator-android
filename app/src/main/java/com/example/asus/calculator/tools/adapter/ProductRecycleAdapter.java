@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.example.asus.calculator.R;
@@ -37,15 +38,10 @@ public class ProductRecycleAdapter extends RecyclerView.Adapter<ProductRecycleAd
         String text = String.format("%s %s", model.getCalories(),
                 context.getResources().getString(R.string.textView_secondary_list_product));
         holder.tvCalorie.setText(text);
+        holder.checkBox.setTag(model);
         holder.checkBox.setChecked(model.isChecked());
 
-        holder.checkBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                model.setChecked(!model.isChecked());
-                holder.checkBox.setChecked(model.isChecked());
-            }
-        });
+
     }
 
     @Override
@@ -57,7 +53,7 @@ public class ProductRecycleAdapter extends RecyclerView.Adapter<ProductRecycleAd
         list.addAll(newList);
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener {
         TextView tvName;
         TextView tvCalorie;
         CheckBox checkBox;
@@ -67,6 +63,14 @@ public class ProductRecycleAdapter extends RecyclerView.Adapter<ProductRecycleAd
             tvName = (TextView) view.findViewById(R.id.tv_product_name);
             tvCalorie = (TextView) view.findViewById(R.id.tv_calorie);
             checkBox = (CheckBox) view.findViewById(R.id.cb_product_odd);
+            checkBox.setOnCheckedChangeListener(this);
+        }
+
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            ProductModel model = (ProductModel) buttonView.getTag();
+            model.setChecked(isChecked);
+            checkBox.setChecked(isChecked);
         }
     }
 }
